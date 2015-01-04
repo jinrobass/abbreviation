@@ -65,8 +65,6 @@
             [self.sectionCountDictionary setObject:[NSNumber numberWithInteger:num] forKey:self.initialSet[i]];
         }
         
-        NSLog(@"sectionCountDict : %@", self.sectionCountDictionary);
-        
         // リロード
         [self.tableView reloadData];
         
@@ -97,6 +95,13 @@
     return [[self.sectionCountDictionary objectForKey:self.initialSet[section]] unsignedIntegerValue];
 }
 
+// セクションインデックスを設定
+- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
+    NSSortDescriptor *tempSD = [NSSortDescriptor sortDescriptorWithKey:@"self" ascending:YES];
+    NSArray *initialSetArray = [self.initialSet sortedArrayUsingDescriptors:@[tempSD]];
+    return initialSetArray;
+}
+
 // セルの内容を設定
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellIdentifier = @"AbbCell";
@@ -116,33 +121,29 @@
     return cell;
 }
 
-// 選択したセルの通し番号を設定
+#pragma mark - Navigation
+
+// 選択したセルの内容を次画面に渡しながら画面遷移
+// もともと画面遷移にはprepareForSegueを使っていたが、この方法だと
+// didSelectRowAtIndexPathが実行されるよりも前に遷移してしまうため、現在の実装に変更
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // 選択状態の解除
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     
+    // 選択したセルの通し番号を設定
     int sum = 0;
     for (int i = 0; i < indexPath.section; i++) {
         sum += [[self.sectionCountDictionary objectForKey:self.initialSet[i]] unsignedIntegerValue];
     }
     self.selectedSerialNumber = sum + indexPath.row;
     
+    // 既存のPFObjectを遷移先の画面に渡す
     PFObject *abb = self.abbArray[self.selectedSerialNumber];
     AbbreviationViewController *abbVC = [self.storyboard instantiateViewControllerWithIdentifier:@"abbVC"];
     abbVC.abb = abb;
     
+    // pushで画面遷移
     [self.navigationController pushViewController:abbVC animated:YES];
 }
-
-#pragma mark - Navigation
-
-//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-//    // 更新時には既存のPFObjectを遷移先の画面に渡す
-//    if ([segue.identifier isEqualToString:@"editSegue"]) {
-//        PFObject *abb = self.abbArray[self.selectedSerialNumber];
-//        AbbreviationViewController *abbVC = [segue destinationViewController];
-//        abbVC.abb = abb;
-//    }
-//}
 
 @end
