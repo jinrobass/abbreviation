@@ -7,10 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AbbreviationViewController.h"
 
 /**
  略語リスト画面
  */
 @interface AbbreviationListViewController : UITableViewController
+
+@property NSMutableArray *abbArray;
+@property NSMutableArray *initialArray;
+@property NSOrderedSet *initialSet;
+@property NSMutableDictionary *sectionCountDictionary;
+@property int serialNumber;
+@property int selectedSerialNumber;
+
+@property IBOutlet UIBarButtonItem *addButton;
 
 @end

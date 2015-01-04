@@ -7,7 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Parse/Parse.h>
 
 @interface AbbreviationViewController : UITableViewController
+
+@property PFObject *abb;
+//@property Boolean textViewIsEditing;
+
+@property IBOutlet UITextField *abbreviationTextField;
+@property IBOutlet UITextField *longNameTextField;
+@property IBOutlet UITextField *pronunciationTextField;
+@property IBOutlet UITextField *sourceTextField;
+@property IBOutlet UITextView *descTextView;
+@property IBOutlet UIBarButtonItem *doneButton;
 
 @end
