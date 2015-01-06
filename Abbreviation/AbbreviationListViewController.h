@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AbbreviationViewController.h"
 
 /**
  略語リスト画面

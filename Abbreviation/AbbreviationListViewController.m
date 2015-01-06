@@ -7,9 +7,9 @@
 //
 
 #import "AbbreviationListViewController.h"
-#import <Parse/Parse.h>
 #import "AbbreviationViewController.h"
-
+#import <Parse/Parse.h>
+#import <SVProgressHUD/SVProgressHUD.h>
 
 @interface AbbreviationListViewController ()
 
@@ -25,6 +25,9 @@
     
     // indexPathから算出するセルの通し番号を初期化
     self.serialNumber = 0;
+
+    // ローディング画像を表示
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
     
     // アルファベット順に略語リストを取得
     PFQuery *query = [PFQuery queryWithClassName:@"Abb"];
@@ -67,6 +70,9 @@
         
         // リロード
         [self.tableView reloadData];
+        
+        // ローディング画像を非表示
+        [SVProgressHUD dismiss];
         
         // 追加ボタンを有効化
         self.addButton.enabled = YES;

@@ -125,14 +125,4 @@
 //    self.navigationItem.rightBarButtonItem.enabled = (self.abbreviationTextField.text.length > 0 && self.longNameTextField.text.length > 0);
 //}
 
-#pragma mark - TODO list
-
-// TODO 検索機能
-// TODO TextViewのプレースホルダー
-// TODO TextView編集後にキーボード非表示
-// TODO リスト表示時にスワイプで削除
-// TODO UIRefreshControllでの更新
-// TODO cancelボタン押下時に、更新されている時のみリストを再読み込み
-// TODO 登録日、更新日の表示
-
 @end
